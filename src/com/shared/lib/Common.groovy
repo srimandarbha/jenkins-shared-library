@@ -1,5 +1,4 @@
 package com.shared.lib
-
 /*
 common class
  */
@@ -12,6 +11,6 @@ class Common implements Serializable {
     }
     String MAVEN = "Apache Maven 3.3.9"
     def Shout(env){
-        print("shouting from Common.groovy, with maven version ${MAVEN} with build number ${env.BUILD_NUMBER}")
+        println("shouting from Common.groovy, with maven version ${MAVEN} with build number ${env.BUILD_NUMBER}")
     }
 }
