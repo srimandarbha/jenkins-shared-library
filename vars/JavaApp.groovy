@@ -6,8 +6,12 @@ def call(msg="hello") {
         agent none
         stages {
             stage("test"){
-                script{
-                    sh "${common.MAVEN}"
+                steps {
+                    step {
+                        script {
+                            sh "${common.MAVEN}"
+                        }
+                    }
                 }
             }
         }
