@@ -1,3 +1,4 @@
-.idea
-*.iml
-lib
+*
+!src/*
+!vars/*
+!README.md
