@@ -2,12 +2,10 @@ import com.shared.lib.Common
 import com.shared.lib.Utils
 import java.util.Date
 
-Date date = new Date()
-Common common = new Common(this)
-
 
 def call(String agentType = 'any'){
-    //Date date = new Date()
+    Date date = new Date()
+    Common common = new Common(this)
     common.Shout()
     logger("agentType is ${agentType}")
     node {
