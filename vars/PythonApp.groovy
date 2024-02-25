@@ -10,7 +10,7 @@ def call(String agentType = 'any') {
     common.Shout()
     logger("agentType is ${agentType}")
     pipeline {
-        agent "${agentType}"
+        agent none
         stages {
             stage("start") {
                 steps {
