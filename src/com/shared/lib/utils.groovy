@@ -1,3 +1,7 @@
-static void main(args) {
-    print ("Welcome to Javatpoint tutorial on Groovy... ")
+package com.shared.lib
+
+class common {
+    static void main(args) {
+        print ("shout from utils.groovy ")
+    }
 }
