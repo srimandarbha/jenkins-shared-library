@@ -7,10 +7,8 @@ def call(msg="hello") {
         stages {
             stage("test"){
                 steps {
-                    step {
-                        script {
-                            echo "${common.MAVEN}"
-                        }
+                    script {
+                        echo "${common.MAVEN}"
                     }
                 }
             }
