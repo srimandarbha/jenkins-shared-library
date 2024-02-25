@@ -37,14 +37,14 @@ def call(String agentType = 'any') {
     }
 }
 
-def err(String msg){
+def err(msg){
     Date date = new Date()
     timenow = date.toString()
     common.log("${timenow} ERROR: ${msg}")
 }
 
 /*
-def info(String msg){
+def info(msg){
     Date date = new Date()
     timenow = date.toString()
     println("${timenow} INFO: ${msg}")
@@ -57,6 +57,6 @@ def shout(){
     return util.Shout()
 }
 
-def logger(String msg) {
+def logger(msg) {
     println(date.toString() + msg)
 }
