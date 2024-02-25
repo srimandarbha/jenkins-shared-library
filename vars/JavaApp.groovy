@@ -3,7 +3,7 @@ import com.shared.lib.Common
 def call(msg="hello") {
     Common common = new Common()
     pipeline {
-        agent none
+        agent any
         stages {
             stage("test"){
                 steps {
