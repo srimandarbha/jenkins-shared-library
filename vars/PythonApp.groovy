@@ -5,7 +5,7 @@ import java.util.Date
 Date date = new Date()
 Common common = new Common(env,steps)
 
-def call(String msg, String agentType = 'any'){
+def call(String agentType = 'any'){
     //Date date = new Date()
     def output = common.Shout(env)
     logger("${output}, agentType is ${agentType}")
