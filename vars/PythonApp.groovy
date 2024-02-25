@@ -5,7 +5,7 @@ import java.util.Date
 
 def call(String agentType = 'any'){
     Date date = new Date()
-    Common common = new Common(steps)
+    Common common = new Common(this)
     common.Shout()
     logger("agentType is ${agentType}")
     node {
