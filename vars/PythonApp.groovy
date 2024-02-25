@@ -3,7 +3,7 @@ import com.shared.lib.Utils
 import java.util.Date
 
 
-def call(String agentType = 'any') {
+def call(agentType = 'any') {
     //Date date = new Date()
     //Common common = new Common(this)
     //println "hello"
@@ -40,7 +40,8 @@ def call(String agentType = 'any') {
 def err(msg){
     Date date = new Date()
     timenow = date.toString()
-    common.log("${timenow} ERROR: ${msg}")
+    echo "ERROR: ${msg}"
+    //common.log("${timenow} ERROR: ${msg}")
 }
 
 /*
