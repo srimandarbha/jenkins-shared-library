@@ -3,19 +3,19 @@ import com.shared.lib.Utils
 import java.util.Date
 
 Date date = new Date()
-Common common = new Common(env,steps)
+Common common = new Common(this)
 
 
 def call(String agentType = 'any'){
     //Date date = new Date()
-    def output = common.Shout(env)
-    logger("${output}, agentType is ${agentType}")
+    common.Shout()
+    logger("agentType is ${agentType}")
     node {
         stage("start") {
-            println(date.toString() + shout())
+            err("START")
         }
         stage("process") {
-            info("processing ${common.MAVEN}")
+            err("processing ${common.MAVEN}")
         }
         stage("end") {
             err("NOTHING DONE")
@@ -26,15 +26,16 @@ def call(String agentType = 'any'){
 def err(String msg){
     Date date = new Date()
     timenow = date.toString()
-    println("${timenow} ERROR: ${msg}")
+    common.log("${timenow} ERROR: ${msg}")
 }
 
+/*
 def info(String msg){
     Date date = new Date()
     timenow = date.toString()
     println("${timenow} INFO: ${msg}")
 }
-
+*/
 def shout(){
     Date date = new Date()
     timenow = date.toString()

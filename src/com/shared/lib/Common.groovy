@@ -1,18 +1,19 @@
 package com.shared.lib
-import groovy.util.logging.Log
-/*
-common class
- */
-@Log
+
+import java.util.Date
+
+Date date = new Date()
+
 class Common implements Serializable {
     def steps
-    def env
-    Common(steps,env) {
-        this.env = env
+    Common(steps) {
         this.steps = steps
     }
     String MAVEN = "Apache Maven 3.3.9"
-    def Shout(env){
-        return "shouting from Common.groovy, with maven version ${MAVEN} with build number ${env.BUILD_NUMBER}"
+    def Shout(){
+        steps.echo "${date.toString()}: shouting from Common.groovy, with maven version ${MAVEN} with build number"
+    }
+    def log(msg){
+        steps.echo "${msg}"
     }
 }
