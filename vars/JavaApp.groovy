@@ -9,7 +9,7 @@ def call(msg="hello") {
                 steps {
                     step {
                         script {
-                            sh "${common.MAVEN}"
+                            echo "${common.MAVEN}"
                         }
                     }
                 }
