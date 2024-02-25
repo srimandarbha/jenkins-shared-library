@@ -1,7 +1,9 @@
 package com.shared.lib
+import groovy.util.logging.Log
 /*
 common class
  */
+@Log
 class Common implements Serializable {
     def steps
     def env
