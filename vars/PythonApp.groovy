@@ -2,7 +2,7 @@ import com.shared.lib.Common
 import com.shared.lib.Utils
 import java.util.Date
 
-
+/*
 def call(agentType = 'any') {
     //Date date = new Date()
     //Common common = new Common(this)
@@ -44,13 +44,14 @@ def err(msg){
     //common.log("${timenow} ERROR: ${msg}")
 }
 
-/*
+
 def info(msg){
     Date date = new Date()
     timenow = date.toString()
     println("${timenow} INFO: ${msg}")
 }
-*/
+
+
 def shout(){
     Date date = new Date()
     timenow = date.toString()
@@ -60,4 +61,8 @@ def shout(){
 
 def logger(msg) {
     println(date.toString() + msg)
+}
+*/
+def call(msg="hello") {
+    echo "${msg}"
 }
