@@ -2,11 +2,10 @@ import com.shared.lib.Common
 import java.util.Date
 
 def call(String msg){
-    /*
     Date date = new Date()
-    println(date.toString() + " " + msg) */
     Common common = new Common(env,steps)
-    common.Shout(env)
+    def output = common.Shout(env)
+    println(date.toString() + " " + msg + " ${output}")
 }
 
 def err(String msg){

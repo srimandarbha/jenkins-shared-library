@@ -11,6 +11,6 @@ class Common implements Serializable {
     }
     String MAVEN = "Apache Maven 3.3.9"
     def Shout(env){
-        println("shouting from Common.groovy, with maven version ${MAVEN} with build number ${env.BUILD_NUMBER}")
+        return "shouting from Common.groovy, with maven version ${MAVEN} with build number ${env.BUILD_NUMBER}"
     }
 }
