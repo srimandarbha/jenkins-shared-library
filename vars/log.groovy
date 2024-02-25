@@ -1,9 +1,12 @@
-//import com.shared.lib.common
+import com.shared.lib.Common
 import java.util.Date
 
 def call(String msg){
+    /*
     Date date = new Date()
-    println(date.toString() + " " + msg)
+    println(date.toString() + " " + msg) */
+    Common common = new Common()
+    common.Shout()
 }
 
 def err(String msg){
