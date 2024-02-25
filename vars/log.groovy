@@ -5,7 +5,7 @@ def call(String msg){
     /*
     Date date = new Date()
     println(date.toString() + " " + msg) */
-    Common common = new Common()
+    Common common = new Common(env,steps)
     common.Shout()
 }
 
