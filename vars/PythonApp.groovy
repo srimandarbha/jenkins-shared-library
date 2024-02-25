@@ -3,20 +3,35 @@ import com.shared.lib.Utils
 import java.util.Date
 
 
-def call(String agentType = 'any'){
+def call(String agentType = 'any') {
     Date date = new Date()
     Common common = new Common(this)
     common.Shout()
     logger("agentType is ${agentType}")
-    node {
-        stage("start") {
-            err("START")
-        }
-        stage("process") {
-            err("processing ${common.MAVEN}")
-        }
-        stage("end") {
-            err("NOTHING DONE")
+    pipeline {
+        agent none
+        stages {
+            stage("start") {
+                steps {
+                    script {
+                        err("START")
+                    }
+                }
+            }
+            stage("process") {
+                steps {
+                    script {
+                        err("processing ${common.MAVEN}")
+                    }
+                }
+            }
+            stage("end") {
+                steps {
+                    script {
+                        err("NOTHING DONE")
+                    }
+                }
+            }
         }
     }
 }
