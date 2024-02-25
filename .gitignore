@@ -1,4 +1,7 @@
 *
-!src/*
+
+!src/com/shared/lib
+!src/com/shared/lib/*.groovy
+!vars
 !vars/*
 !README.md
