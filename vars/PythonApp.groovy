@@ -2,11 +2,13 @@ import com.shared.lib.Common
 import com.shared.lib.Utils
 import java.util.Date
 
+Date date = new Date()
+Common common = new Common(env,steps)
+
 def call(String msg, String agentType = 'any'){
-    Date date = new Date()
-    Common common = new Common(env,steps)
+    //Date date = new Date()
     def output = common.Shout(env)
-    println(date.toString() + " " + msg + " ${output}")
+    logger("${output}, agentType is ${agentType}")
     node {
         stage("start") {
             println(date.toString() + shout())
@@ -37,4 +39,8 @@ def shout(){
     timenow = date.toString()
     Utils util = new Utils()
     return util.Shout()
+}
+
+def logger(String msg) {
+    println(date.toString() + msg)
 }
