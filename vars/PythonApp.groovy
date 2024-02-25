@@ -4,11 +4,11 @@ import java.util.Date
 
 
 def call(String agentType = 'any') {
-    Date date = new Date()
-    Common common = new Common(this)
-    println "hello"
-    common.Shout()
-    logger("agentType is ${agentType}")
+    //Date date = new Date()
+    //Common common = new Common(this)
+    //println "hello"
+    //common.Shout()
+    //logger("agentType is ${agentType}")
     pipeline {
         agent none
         stages {
