@@ -5,7 +5,7 @@ class Utils implements Serializable {
         this.shell = shell
         this.env = env
     }
-    def stdout() {
+    def Stdout() {
         print ("shout from Utils.groovy ")
     }
 }
