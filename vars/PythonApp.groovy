@@ -29,7 +29,7 @@ def call() {
                         echo "${params}"
                         ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
                         ARTIFACT = [:]
-                        ENV_VARS.repoUrl = params.repoURL
+                        def ENV_VARS.repoUrl = params.repoURL
                         echo "${ENV_VARS.repoUrl} ${params['repoURL']}"
                         if (ENV_VARS.repoURL != null ) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
