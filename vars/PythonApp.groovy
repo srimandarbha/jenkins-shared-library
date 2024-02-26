@@ -27,17 +27,19 @@ def call() {
                     script {
                         echo "Conducting PythonApp deployment prechecks"
 
-                        ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitCollect: false, notify: true]
+                        ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
                         ARTIFACT = [:]
-
-                        if (params.repoURL == null ) {
+                        ENV_VARS.repoUrl = params.repoURL
+                        if (ENV_VARS.repoURL == null ) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
-                        if (params.repoURL) {
-                            ENV_VARS.gitOrg = env.repoURL.split('uk.hsbc/').last().split('/').first()
-                            ENV_VARS.gitRepo = env.repoURL.split('uk.hsbc/').last().split('/').last().replace('.git', '')
+                        if (ENV_VARS.repoURL) {
+                            ENV_VARS.gitOrg=''
+                            ENV_VARS.gitRepo=''
+                            ENV_VARS.gitPull=true
+                           // ENV_VARS.gitOrg = env.repoURL.split('uk.hsbc/').last().split('/').first()
+                            //ENV_VARS.gitRepo = env.repoURL.split('uk.hsbc/').last().split('/').last().replace('.git', '')
                         }
-                        Git(repoUrl="${params.repoURL}",repoDir=".")
                     }
                 }
             }
@@ -45,7 +47,9 @@ def call() {
                 steps {
                     script {
                         info("${ENV_VARS.gitOrg} ${ENV_VARS.gitRepo}")
-                        cloneRepo("${repoUrl}", ".")
+                        if (ENV_VARS.gitPull) {
+                            Git(repoUrl="${params.repoURL}",repoDir=".")
+                        }
                     }
                 }
             }
