@@ -16,22 +16,17 @@ def call() {
             choice(choices: ['PROD', 'UAT', 'DEV'], name: 'Environment')
         }
 
-        environment
-                {
-                    ENV_VARS = ""
-                    ARTIFACT = ""
-                }
         stages {
             stage("PreRequisite Checks") {
                 steps {
                     script {
                         echo "Conducting PythonApp deployment prechecks"
-                        echo "${params.repoURL}"
+                        echo "${params.repoUrl}"
                         ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
                         ARTIFACT = [:]
-                        repoUrl = params.repoURL
-                        echo "${ENV_VARS.repoUrl} ${params['repoURL']} ${repoUrl}"
-                        if (ENV_VARS.repoURL != null ) {
+                        ENV_VARS.repoUrl = params.repoUrl
+                        echo "${ENV_VARS.repoUrl} ${params['repoUrl']}"
+                        if (ENV_VARS.repoUrl == null ) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
                         if (ENV_VARS.repoURL) {
