@@ -37,7 +37,7 @@ def call() {
                             ENV_VARS.gitOrg = env.repoURL.split('uk.hsbc/').last().split('/').first()
                             ENV_VARS.gitRepo = env.repoURL.split('uk.hsbc/').last().split('/').last().replace('.git', '')
                         }
-
+                        Git(repoUrl="${params.repoURL}",repoDir=".")
                     }
                 }
             }
