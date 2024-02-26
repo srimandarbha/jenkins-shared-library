@@ -61,5 +61,6 @@ def shout(){
 }
 
 def logger(msg) {
+    Date date = new Date()
     println(date.toString() + msg)
 }
