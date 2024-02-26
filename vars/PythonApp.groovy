@@ -3,8 +3,10 @@ def call(repo) {
         agent any
         stages {
             stage("testing") {
-                script {
-                    shell "${repo}"
+                steps{
+                    script {
+                        shell "${repo}"
+                    }
                 }
             }
         }
