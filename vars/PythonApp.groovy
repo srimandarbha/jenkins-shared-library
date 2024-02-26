@@ -27,13 +27,12 @@ def call() {
                     script {
                         echo "Conducting PythonApp deployment prechecks"
 
-                        ENV_VARS = [changeNo:'###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitCollect: false, notify: true]
+                        ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitCollect: false, notify: true]
                         ARTIFACT = [:]
 
-                        if (env.GIT_URL)
-                        {
+                        if (env.GIT_URL) {
                             ENV_VARS.gitOrg = env.GIT_URL.split('uk.hsbc/').last().split('/').first();
-                            ENV_VARS.gitRepo = env.GIT_URL.split('uk.hsbc/').last().split('/').last().replace('.git','')
+                            ENV_VARS.gitRepo = env.GIT_URL.split('uk.hsbc/').last().split('/').last().replace('.git', '')
                         }
                     }
                 }
@@ -73,14 +72,14 @@ def call() {
                     }
                 }
             }
-            post {
-                always
-                        {
+        }
+        post {
+              always
+                      {
                             script {
                                 info("email compose with jmeter report and build details")
                             }
-                        }
-            }
+                      }
         }
     }
 }
