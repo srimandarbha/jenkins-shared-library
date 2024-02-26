@@ -18,6 +18,6 @@ class Common implements Serializable {
     }
 
     def getBuild(){
-        steps.echo "${steps.env.BUILD_NUMBER}"
+        steps.echo "${env.BUILD_NUMBER}"
     }
 }
