@@ -12,8 +12,8 @@ def call() {
                     timestamps()
                 }
         parameters {
-            string name: 'repoUrl', trim: true
-            choice choices: ['PROD', 'UAT', 'DEV'], name: 'Environment'
+            string(name: 'repoUrl', defaultValue: '', description: 'repository URL')
+            choice(choices: ['PROD', 'UAT', 'DEV'], name: 'Environment')
         }
 
         environment
@@ -29,8 +29,8 @@ def call() {
                         echo "${params.repoURL}"
                         ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
                         ARTIFACT = [:]
-                        ENV_VARS.repoUrl = params.repoURL
-                        echo "${ENV_VARS.repoUrl} ${params['repoURL']}"
+                        repoUrl = params.repoURL
+                        echo "${ENV_VARS.repoUrl} ${params['repoURL']} ${repoUrl}"
                         if (ENV_VARS.repoURL != null ) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
