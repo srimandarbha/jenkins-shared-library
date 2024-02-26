@@ -1,5 +1,5 @@
 def call(repo) {
-    pipeline
+    pipeline {
         agent any
         stages {
             stage("testing") {
@@ -8,4 +8,5 @@ def call(repo) {
                 }
             }
         }
+    }
 }
