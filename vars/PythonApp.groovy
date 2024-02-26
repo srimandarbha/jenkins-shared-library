@@ -45,7 +45,7 @@ def call() {
                         info("${ENV_VARS.gitOrg} ${ENV_VARS.gitRepo}")
                         echo "${ENV_VARS.gitPull}"
                         if (ENV_VARS.gitPull) {
-                            Git(repoUrl="${params.repoURL}",repoDir=".")
+                            Git(repoUrl="${params.repoUrl}",repoDir=".")
                         }
                     }
                 }
