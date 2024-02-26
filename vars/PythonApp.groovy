@@ -30,7 +30,7 @@ def call() {
                         ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
                         ARTIFACT = [:]
                         ENV_VARS.repoUrl = params.repoURL
-                        echo "${ENV_VARS.repoUrl}"
+                        echo "${ENV_VARS.repoUrl} ${params.repoURL}"
                         if (ENV_VARS.repoURL != null ) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
@@ -48,6 +48,7 @@ def call() {
                 steps {
                     script {
                         info("${ENV_VARS.gitOrg} ${ENV_VARS.gitRepo}")
+                        echo "${ENV_VARS.gitPull}"
                         if (ENV_VARS.gitPull) {
                             Git(repoUrl="${params.repoURL}",repoDir=".")
                         }
