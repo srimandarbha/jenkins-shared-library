@@ -16,4 +16,8 @@ class Common implements Serializable {
     def log(msg){
         steps.echo "${msg}"
     }
+
+    def getBuild(){
+        steps.echo "${steps.env.BUILD_NUMBER}"
+    }
 }
