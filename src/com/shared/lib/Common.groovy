@@ -7,7 +7,6 @@ class Common implements Serializable {
     Common(steps) {
         this.steps = steps
     }
-    String MAVEN = "Apache Maven 3.3.9"
 
     def Shout(){
         Date date = new Date()

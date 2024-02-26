@@ -4,64 +4,89 @@ import java.util.Date
 
 Date date = new Date()
 
-def call(agentType = 'any') {
-    Date date = new Date()
-    Common common = new Common(this)
-    println "hello"
-    common.Shout()
-    logger("agentType is ${agentType}")
+def call() {
     pipeline {
-        agent any
+        agent none
+        options
+                {
+                    timestamps()
+                }
+        parameters {
+            string name: 'ProjectUrl', trim: true
+            choice choices: ['PROD', 'UAT', 'DEV'], name: 'Environment'
+        }
+
+        environment
+                {
+                    ENV_VARS = ""
+                    ARTIFACT = ""
+                }
         stages {
-            stage("start") {
+            stage("PreRequisite Checks") {
                 steps {
                     script {
-                        err("START")
+                        echo "Conducting PythonApp deployment prechecks"
+
+                        ENV_VARS = [changeNo:'###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitCollect: false, notify: true]
+                        ARTIFACT = [:]
+
+                        if (env.GIT_URL)
+                        {
+                            ENV_VARS.gitOrg = env.GIT_URL.split('uk.hsbc/').last().split('/').first();
+                            ENV_VARS.gitRepo = env.GIT_URL.split('uk.hsbc/').last().split('/').last().replace('.git','')
+                        }
                     }
                 }
             }
-            stage("process") {
+            stage("Repo fetch") {
                 steps {
                     script {
-                        err("processing ${common.MAVEN}")
                         info("${env.BUILD_NUMBER}")
                     }
                 }
             }
-            stage("end") {
+            stage("sonarqube checks") {
                 steps {
                     script {
-                        err("NOTHING DONE")
+                        info("sonarqube report running")
                     }
                 }
+            }
+            stage("maven upload") {
+                steps {
+                    script {
+                        info("maven push")
+                    }
+                }
+            }
+            stage("Deployment") {
+                steps {
+                    script {
+                        info("Deployment to Ansible")
+                    }
+                }
+            }
+            stage("Jmeter checks") {
+                steps {
+                    script {
+                        info("Jmeter report")
+                    }
+                }
+            }
+            post {
+                always
+                        {
+                            script {
+                                info("email compose with jmeter report and build details")
+                            }
+                        }
             }
         }
     }
 }
 
-def err(msg){
-    Date date = new Date()
-    timenow = date.toString()
-    echo "ERROR: ${msg}"
-    //common.log("${timenow} ERROR: ${msg}")
-}
-
-
 def info(msg){
     Date date = new Date()
     timenow = date.toString()
     println("${timenow} INFO: ${msg}")
-}
-
-
-def shout(){
-    Date date = new Date()
-    timenow = date.toString()
-    Utils util = new Utils()
-    return util.Shout()
-}
-
-def logger(msg) {
-    Date date = new Date()
-    println(date.toString() + msg)
 }
