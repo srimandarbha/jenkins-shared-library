@@ -26,7 +26,7 @@ def call() {
                 steps {
                     script {
                         echo "Conducting PythonApp deployment prechecks"
-
+                        echo "${params}"
                         ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
                         ARTIFACT = [:]
                         ENV_VARS.repoUrl = params.repoURL
