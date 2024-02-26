@@ -29,7 +29,7 @@ def call() {
                         if (ENV_VARS.repoUrl == null ) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
-                        if (ENV_VARS.repoURL) {
+                        if (ENV_VARS.repoUrl) {
                             ENV_VARS.gitOrg=''
                             ENV_VARS.gitRepo=''
                             ENV_VARS.gitPull=true
