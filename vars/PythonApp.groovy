@@ -12,7 +12,7 @@ def call() {
                     timestamps()
                 }
         parameters {
-            string name: 'ProjectUrl', trim: true
+            string name: 'repoUrl', trim: true
             choice choices: ['PROD', 'UAT', 'DEV'], name: 'Environment'
         }
 
@@ -30,17 +30,22 @@ def call() {
                         ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitCollect: false, notify: true]
                         ARTIFACT = [:]
 
-                        if (env.GIT_URL) {
-                            ENV_VARS.gitOrg = env.GIT_URL.split('uk.hsbc/').last().split('/').first();
-                            ENV_VARS.gitRepo = env.GIT_URL.split('uk.hsbc/').last().split('/').last().replace('.git', '')
+                        if (params.repoURL == null ) {
+                            error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
+                        if (params.repoURL) {
+                            ENV_VARS.gitOrg = env.repoURL.split('uk.hsbc/').last().split('/').first()
+                            ENV_VARS.gitRepo = env.repoURL.split('uk.hsbc/').last().split('/').last().replace('.git', '')
+                        }
+
                     }
                 }
             }
             stage("Repo fetch") {
                 steps {
                     script {
-                        info("${env.BUILD_NUMBER}")
+                        info("${ENV_VARS.gitOrg} ${ENV_VARS.gitRepo}")
+                        cloneRepo("${repoUrl}", ".")
                     }
                 }
             }
