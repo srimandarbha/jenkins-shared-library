@@ -24,7 +24,7 @@ def call(agentType = 'any') {
                 steps {
                     script {
                         err("processing ${common.MAVEN}")
-                        info("${common.getBuild()}")
+                        info("${env.BUILD_NUMBER}")
                     }
                 }
             }
