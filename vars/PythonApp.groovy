@@ -54,6 +54,9 @@ def call() {
                 steps {
                     script {
                         info("sonarqube report running")
+                        withSonarQubeEnv('SonarQube') {
+                            sh 'sonar-scanner'
+                        }
                     }
                 }
             }
