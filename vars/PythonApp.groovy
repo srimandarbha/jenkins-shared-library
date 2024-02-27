@@ -27,9 +27,9 @@ def call() {
                         if (ENV_VARS.repoUrl == null ) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
-                        //echo "testing.yaml reading"
-                        //data = readYaml file: "testing.yaml"
-                        //echo "${data}"
+                        echo "testing.yaml reading"
+                        data = readYaml file: "testing.yaml"
+                        echo "${data}"
                         /*
                         if (ENV_VARS.repoUrl) {
                             if ( ENV_VARS.repoUrl.contains("http") ) {
