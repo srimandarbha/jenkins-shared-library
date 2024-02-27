@@ -47,6 +47,9 @@ def call() {
                             ENV_VARS.gitPull=true
 
                         } */
+                        if (ENV_VARS.repoUrl) {
+                            ENV_VARS.gitPull=true
+                        }
                     }
                 }
             }
