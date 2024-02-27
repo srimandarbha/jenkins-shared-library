@@ -58,7 +58,7 @@ def call() {
                     script {
                         info("${ENV_VARS.gitOrg} ${ENV_VARS.gitRepo}")
                         if (ENV_VARS.gitPull) {
-                            Git(repoUrl="${params.repoUrl}",repoDir=".")
+                            Git(repoUrl="${params.repoUrl}")
                             //checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: "${ENV_VARS.repoUrl}"]])
                         }
                     }
