@@ -27,9 +27,9 @@ def call() {
                         if (ENV_VARS.repoUrl == null ) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
-                        echo "testing.yaml reading"
-                        data = readYaml file: "testing.yaml"
-                        echo "${data}"
+                        //echo "testing.yaml reading"
+                        //data = readYaml file: "testing.yaml"
+                        //echo "${data}"
                         /*
                         if (ENV_VARS.repoUrl) {
                             if ( ENV_VARS.repoUrl.contains("http") ) {
@@ -55,7 +55,8 @@ def call() {
                     script {
                         info("${ENV_VARS.gitOrg} ${ENV_VARS.gitRepo}")
                         if (ENV_VARS.gitPull) {
-                            Git(repoUrl="${params.repoUrl}",repoDir=".")
+                            //Git(repoUrl="${params.repoUrl}",repoDir=".")
+                            checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: "${ENV_VARS.repoUrl}"]])
                         }
                     }
                 }
