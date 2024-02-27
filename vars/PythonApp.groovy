@@ -24,7 +24,7 @@ def call() {
                         ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
                         ARTIFACT = [:]
                         ENV_VARS.repoUrl = params.repoUrl
-                        if (ENV_VARS.repoUrl == null ) {
+                        if (ENV_VARS.repoUrl == null) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
                         echo "testing.yaml reading"
@@ -48,7 +48,7 @@ def call() {
 
                         } */
                         if (ENV_VARS.repoUrl) {
-                            ENV_VARS.gitPull=true
+                            ENV_VARS.gitPull = true
                         }
                     }
                 }
@@ -70,8 +70,7 @@ def call() {
                         info("sonarqube report running")
                         def scannerHome = tool 'sonar-scanner';
                         withSonarQubeEnv(credentialsId: 'f225455e-ea59-40fa-8af7-08176e86507a', installationName: 'sonar-scanner')
-                        sh "${sonar-scanner}/bin/sonar-scanner -Dsonar.projectKey=toDo"
-                        }
+                        sh "${sonar - scanner}/bin/sonar-scanner -Dsonar.projectKey=toDo"
                     }
                 }
             }
@@ -98,13 +97,14 @@ def call() {
             }
         }
         post {
-              always
-                      {
-                            script {
-                                info("email compose with jmeter report and build details")
-                            }
-                      }
+            always
+                    {
+                        script {
+                            info("email compose with jmeter report and build details")
+                        }
+                    }
         }
+    }
 }
 
 def info(msg){
