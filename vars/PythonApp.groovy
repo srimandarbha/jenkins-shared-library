@@ -68,8 +68,8 @@ def call() {
                 steps {
                     script {
                         info("sonarqube report running")
-                        withSonarQubeEnv('SonarQube') {
-                            sh 'sonar-scanner'
+                        withSonarQubeEnv('sonar-scanner') {
+                            sh 'sonar-scanner -Dsonar.projectKey=toDo -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=sqp_7ee4465ce41487b34ff73cb73951ab58c68b5a0a'
                         }
                     }
                 }
