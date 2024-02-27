@@ -27,6 +27,7 @@ def call() {
                         if (ENV_VARS.repoUrl == null ) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
+                        echo "testing.yaml reading"
                         data = readYaml file: "testing.yaml"
                         echo "${data}"
                         /*
