@@ -1,6 +1,6 @@
 def call(String repoUrl) {
-    node {
+    //node {
         //git url: repoUrl, branch: 'master', credentialsId: 'your-credentials-id', directory: repoDir
         git url: repoUrl
-    }
+    //}
 }
