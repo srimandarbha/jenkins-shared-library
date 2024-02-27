@@ -70,7 +70,7 @@ def call() {
                         info("sonarqube report running")
                         def scannerHome = tool 'sonar-scanner';
                         withSonarQubeEnv(credentialsId: 'f225455e-ea59-40fa-8af7-08176e86507a', installationName: 'sonar-scanner')
-                        sh ""${sonar-scanner}/bin/sonar-scanner -Dsonar.projectKey=toDo"
+                        sh "${sonar-scanner}/bin/sonar-scanner -Dsonar.projectKey=toDo"
                         }
                     }
                 }
