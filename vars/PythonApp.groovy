@@ -68,8 +68,9 @@ def call() {
                 steps {
                     script {
                         info("sonarqube report running")
-                        withSonarQubeEnv('sonar-scanner') {
-                            sh 'sonar-scanner -Dsonar.projectKey=toDo -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=sqp_7ee4465ce41487b34ff73cb73951ab58c68b5a0a'
+                        def scannerHome = tool 'sonar-scanner';
+                        withSonarQubeEnv(credentialsId: 'f225455e-ea59-40fa-8af7-08176e86507a', installationName: 'sonar-scanner')
+                        sh '${sonar-scanner}/bin/sonar-scanner -Dsonar.projectKey=toDo'
                         }
                     }
                 }
