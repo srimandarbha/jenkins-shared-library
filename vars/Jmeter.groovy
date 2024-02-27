@@ -1,5 +1,3 @@
-package com.shared.lib
-
 def call(Map config = [:]) {
     // Load JMeter helper class
     def jmeterHome = config.jmeterHome ?: error('JMeter home directory is required')
