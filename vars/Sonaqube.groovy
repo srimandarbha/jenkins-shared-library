@@ -1,12 +1,3 @@
-package com.shared.lib
-
-def analyze(Map config = [:]) {
-    Common common = new Common()
-    def projectKey = config.projectKey ?: error('Project key is required for SonarQube analysis')
-    def sonarqubeScannerHome = config.sonarqubeScannerHome ?: error('SonarQube Scanner home directory is required')
-    common.sh "${sonarqubeScannerHome}/bin/sonar-scanner -Dsonar.projectKey=${projectKey} ..."
-}
-
 def call(Map config = [:]) {
     def projectKey = config.projectKey ?: error('Project key is required for SonarQube analysis')
     def sonarqubeScannerHome = config.sonarqubeScannerHome ?: error('SonarQube Scanner home directory is required')
