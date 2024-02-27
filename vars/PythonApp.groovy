@@ -69,8 +69,10 @@ def call() {
                     script {
                         info("sonarqube report running")
                         def scannerHome = tool 'sonar-scanner';
-                        withSonarQubeEnv(credentialsId: 'sonar', installationName: 'sonar-scanner')
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=toDo"
+                        withSonarQubeEnv(credentialsId: 'sonar', installationName: 'sonar-scanner') {
+                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=toDo"
+                        }
+
                     }
                 }
             }
