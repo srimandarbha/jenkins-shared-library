@@ -1,0 +1,9 @@
+config:
+   sonarqube:
+      token: "test"
+      url: "test"
+      projectKey: "test"
+   ansible:
+      host: "aap.prod.hsbc"
+      env: "PROD"
+      tests: false

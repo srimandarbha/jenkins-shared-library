@@ -21,21 +21,31 @@ def call() {
                 steps {
                     script {
                         echo "Conducting PythonApp deployment prechecks"
-                        echo "${params.repoUrl}"
                         ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
                         ARTIFACT = [:]
                         ENV_VARS.repoUrl = params.repoUrl
-                        echo "${ENV_VARS.repoUrl} ${params['repoUrl']}"
                         if (ENV_VARS.repoUrl == null ) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
+                        data = readYaml file: "testing.yaml"
+                        echo "${data}"
+                        /*
                         if (ENV_VARS.repoUrl) {
+                            if ( ENV_VARS.repoUrl.contains("http") ) {
+                                ENV_VARS.gitOrg = env.repoURL.split('https://').last().split('/').first()
+                                ENV_VARS.gitRepo = env.repoURL.split('http://').last().split('/').last().replace('.git', '')
+                            } else if ( ENV_VARS.repoUrl.contains("git@") ) {
+                                ENV_VARS.gitOrg = env.repoURL.split('git@').last().split('/').first()
+                                ENV_VARS.gitRepo = env.repoURL.split('git@').last().split('/').last().replace('.git', '')
+                            } else {
+                                ENV_VARS.gitOrg = env.repoURL.split('uk.hsbc/').last().split('/').first()
+                                ENV_VARS.gitRepo = env.repoURL.split('uk.hsbc/').last().split('/').last().replace('.git', '')
+                            }
                             ENV_VARS.gitOrg=''
                             ENV_VARS.gitRepo=''
                             ENV_VARS.gitPull=true
-                           // ENV_VARS.gitOrg = env.repoURL.split('uk.hsbc/').last().split('/').first()
-                            //ENV_VARS.gitRepo = env.repoURL.split('uk.hsbc/').last().split('/').last().replace('.git', '')
-                        }
+
+                        } */
                     }
                 }
             }
@@ -43,7 +53,6 @@ def call() {
                 steps {
                     script {
                         info("${ENV_VARS.gitOrg} ${ENV_VARS.gitRepo}")
-                        echo "${ENV_VARS.gitPull}"
                         if (ENV_VARS.gitPull) {
                             Git(repoUrl="${params.repoUrl}",repoDir=".")
                         }
