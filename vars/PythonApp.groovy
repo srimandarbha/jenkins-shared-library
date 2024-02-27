@@ -6,7 +6,7 @@ Date date = new Date()
 
 def call() {
     pipeline {
-        agent none
+        agent any
         options
                 {
                     timestamps()
