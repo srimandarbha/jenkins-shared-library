@@ -80,8 +80,8 @@ def call() {
                 steps {
                     script {
                         info("maven push")
-                        sh "curl -I https://api.github.com/repos/srimandarbha/jenkins-shared-library/tarball/master -o django_todo_master-1.tgz"
-                        sh "curl -v -u deploy:deploy --upload-file django_todo_master-1.tgz http://172.17.0.5:8081/repository/apps/django_todo/1.0/django_todo-1.tgz"
+                        sh "tar -cvzf django_todo_master-1.0.tgz ."
+                        sh "curl -v -u deploy:deploy --upload-file django_todo_master-1.0.tgz http://172.17.0.5:8081/repository/apps/django_todo/1.0/django_todo-1.tgz"
                     }
                 }
             }
