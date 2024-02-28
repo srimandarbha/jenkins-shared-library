@@ -64,7 +64,7 @@ def call() {
                             ENV_VARS.jenkins_sonar_tool_server = data.config.sonarqube.jenkins_sonar_tool_server
                             ENV_VARS.sonarqube_projectKey = data.config.sonarqube.projectKey
                             ENV_VARS.jmeter_install_base = data.config.jmeter.jmeter_install_base ?: '/var/jenkins_home/apache-jmeter-5.6.3'
-
+                            ENV_VARS.jmeter_testfile = data.config.jmeter.test_file ?: 'basic_steps.xml'
                         }
                         else {
                             ENV_VARS.app_name = params.repoUrl.contains('.git') ? params.repoUrl.split('/')[-1][0..-5] : params.repoUrl.split('/')[-1]
