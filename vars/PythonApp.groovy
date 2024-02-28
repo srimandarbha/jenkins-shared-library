@@ -86,7 +86,7 @@ def call() {
                     script {
                         info("maven push")
                         sh "git archive --format=tar main > ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
-                        sh "curl -v -u ${ENV_VARS.maven_user}:${ENV_VARS.maven_pass} --upload-file ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tgz ${ENV_VARS.nexus_server}/repository/${ENV_VARS.nexus_server_repo}/${ENV_VARS.app_name}/${ENV_VARS.app_version}/${ENV_VARS.app_name}-${ENV_VARS.app_version}.tgz"
+                        sh "curl -v -u ${ENV_VARS.maven_user}:${ENV_VARS.maven_pass} --upload-file ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar ${ENV_VARS.nexus_server}/repository/${ENV_VARS.nexus_server_repo}/${ENV_VARS.app_name}/${ENV_VARS.app_version}/${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
                     }
                 }
             }
