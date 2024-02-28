@@ -78,6 +78,14 @@ def call() {
                         withSonarQubeEnv(credentialsId: 'sonar', installationName: 'sonar-scanner') {
                             sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=toDo"
                         }
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            echo "failure: ${qg.status}"
+                            def getURL = readProperties file: '.scannerwork/report-task.txt'
+
+                            echo "SonarQube report tasks url: ${getURL['dashboardUrl']}"
+
+                        }
 
                     }
                 }
