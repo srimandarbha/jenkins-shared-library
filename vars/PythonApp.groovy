@@ -107,7 +107,7 @@ def call() {
             stage("Jmeter checks") {
                 steps {
                     script {
-                        info("Jmeter report")
+                        sh "/var/jenkins_home/apache-jmeter-5.6.3 -j jmeter.save.saveservice.output_format=xml -n -t basic_test.jmx -l jenkins.io.report.jtl"
                     }
                 }
             }
@@ -117,6 +117,7 @@ def call() {
                     {
                         script {
                             info("email compose with jmeter report and build details")
+                            perfReport 'jenkins.io.report.jtl'
                         }
                     }
         }
