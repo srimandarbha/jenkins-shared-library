@@ -21,7 +21,7 @@ def call() {
                 steps {
                     script {
                         echo "Conducting PythonApp deployment prechecks"
-                        ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
+                        ENV_VARS = [ changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true ]
                         ARTIFACT = [:]
                         ENV_VARS.repoUrl = params.repoUrl
                         if (ENV_VARS.repoUrl == null) {
@@ -49,6 +49,11 @@ def call() {
                         } */
                         if (ENV_VARS.repoUrl) {
                             ENV_VARS.gitPull = true
+                            ENV_VARS.app_name = 'django_todo'
+                            ENV_VARS.app_version = '1.0'
+                            ENV_VARS.maven_server_repo = 'apps'
+                            ENV_VARS.maven_user = 'deploy'
+                            ENV_VARS.maven_pass = 'deploy'
                         }
                     }
                 }
@@ -80,8 +85,8 @@ def call() {
                 steps {
                     script {
                         info("maven push")
-                        sh "git archive --format=tar main > ${app_name}-${app_version}.tar"
-                        sh "curl -v -u ${maven_user}:${maven_pass} --upload-file ${app_name}-${app_version}.tgz ${nexus_server}/repository/${nexus_server_repo}/${app_name}/${app_version}/${app_name}-${app_version}.tgz"
+                        sh "git archive --format=tar main > ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
+                        sh "curl -v -u ${ENV_VARS.maven_user}:${ENV_VARS.maven_pass} --upload-file ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tgz ${ENV_VARS.nexus_server}/repository/${ENV_VARS.nexus_server_repo}/${ENV_VARS.app_name}/${ENV_VARS.app_version}/${ENV_VARS.app_name}-${ENV_VARS.app_version}.tgz"
                     }
                 }
             }
