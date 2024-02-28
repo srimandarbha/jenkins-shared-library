@@ -31,23 +31,7 @@ def call() {
                         echo "Checks for jenkins_config.yaml"
                         data = readYaml file: "jenkins_config.yaml"
                         echo "${data}"
-                        /*
-                        if (ENV_VARS.repoUrl) {
-                            if ( ENV_VARS.repoUrl.contains("http") ) {
-                                ENV_VARS.gitOrg = env.repoURL.split('https://').last().split('/').first()
-                                ENV_VARS.gitRepo = env.repoURL.split('http://').last().split('/').last().replace('.git', '')
-                            } else if ( ENV_VARS.repoUrl.contains("git@") ) {
-                                ENV_VARS.gitOrg = env.repoURL.split('git@').last().split('/').first()
-                                ENV_VARS.gitRepo = env.repoURL.split('git@').last().split('/').last().replace('.git', '')
-                            } else {
-                                ENV_VARS.gitOrg = env.repoURL.split('uk.hsbc/').last().split('/').first()
-                                ENV_VARS.gitRepo = env.repoURL.split('uk.hsbc/').last().split('/').last().replace('.git', '')
-                            }
-                            ENV_VARS.gitOrg=''
-                            ENV_VARS.gitRepo=''
-                            ENV_VARS.gitPull=true
 
-                        } */
                         if (ENV_VARS.repoUrl) {
                             ENV_VARS.gitPull = true
                             ENV_VARS.app_name = 'django_todo'
@@ -132,7 +116,7 @@ def call() {
                         script {
                             info("email compose with jmeter report and build details")
                             perfReport 'jenkins.io.report.jtl'
-                            junit 'results.xml'
+                            junit skipMarkingBuildUnstable: true, testResults: 'results.xml'
                         }
                     }
         }
