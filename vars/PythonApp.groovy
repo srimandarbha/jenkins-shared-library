@@ -51,9 +51,10 @@ def call() {
                             ENV_VARS.gitPull = true
                             ENV_VARS.app_name = 'django_todo'
                             ENV_VARS.app_version = '1.0'
-                            ENV_VARS.maven_server_repo = 'apps'
-                            ENV_VARS.maven_user = 'deploy'
-                            ENV_VARS.maven_pass = 'deploy'
+                            ENV_VARS.nexus_user = 'deploy'
+                            ENV_VARS.nexus_pass = 'deploy'
+                            ENV_VARS.nexus_server = '172.17.0.2'
+                            ENV_VARS.nexus_server_repo = 'apps'
                         }
                     }
                 }
@@ -86,7 +87,7 @@ def call() {
                     script {
                         info("maven push")
                         sh "git archive --format=tar main > ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
-                        sh "curl -v -u ${ENV_VARS.maven_user}:${ENV_VARS.maven_pass} --upload-file ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar ${ENV_VARS.nexus_server}/repository/${ENV_VARS.nexus_server_repo}/${ENV_VARS.app_name}/${ENV_VARS.app_version}/${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
+                        sh "curl -v -u ${ENV_VARS.nexus_user}:${ENV_VARS.nexus_pass} --upload-file ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar ${ENV_VARS.nexus_server}/repository/${ENV_VARS.nexus_server_repo}/${ENV_VARS.app_name}/${ENV_VARS.app_version}/${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
                     }
                 }
             }
