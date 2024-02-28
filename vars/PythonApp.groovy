@@ -79,7 +79,8 @@ def call() {
                             ENV_VARS.nexus_pass = data.config.nexus.nexus_pass
                             ENV_VARS.nexus_server = data.config.nexus.nexus_server
                             ENV_VARS.nexus_server_repo = data.config.nexus.nexus_apps
-                            ENV_VARS.jenkins_sonar_toolname = data.config.sonarqube.tool_install
+                            ENV_VARS.jenkins_sonar_tool_client = data.config.sonarqube.jenkins_sonar_tool_client
+                            ENV_VARS.jenkins_sonar_tool_server = data.config.sonarqube.jenkins_sonar_tool_server
                             ENV_VARS.sonarqube_projectKey = data.config.sonarqube.projectKey
                         }
                         else {
