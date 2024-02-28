@@ -102,16 +102,17 @@ def call() {
             stage("maven upload") {
                 steps {
                     script {
-                        info("maven push")
+                        info("creating archive of stable python code")
                         sh "git archive --format=tar main > ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
                         sh "curl -u ${ENV_VARS.nexus_user}:${ENV_VARS.nexus_pass} --upload-file ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar ${ENV_VARS.nexus_server}/repository/${ENV_VARS.nexus_server_repo}/${ENV_VARS.app_name}/${ENV_VARS.app_version}/${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
+                        info("pushing artifact to nexus repository ${ENV_VARS.nexus_server}/${ENV_VARS.nexus_server_repo}")
                     }
                 }
             }
             stage("Deployment") {
                 steps {
                     script {
-                        info("Deployment to Ansible")
+                        info("Deploying code changes using ansible playbooks")
                     }
                 }
             }
@@ -120,6 +121,7 @@ def call() {
                     script {
                         echo 'python pytest'
                         //sh 'python -m pytest -W ignore::UserWarning'
+                        sh 'python3 -m pytest --junit-xml results.xml'
                     }
                 }
             }
