@@ -12,7 +12,7 @@ def call() {
                     timestamps()
                 }
         parameters {
-            string(name: 'repoUrl', defaultValue: '', description: 'repository URL')
+            string(name: 'repoUrl', defaultValue: 'https://github.com/srimandarbha/django_todo', description: 'repository URL')
             choice(choices: ['PROD', 'UAT', 'DEV'], name: 'Environment')
         }
 
