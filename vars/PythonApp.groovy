@@ -98,9 +98,9 @@ def call() {
                 steps {
                     script {
                         info("sonarqube report running")
-                        def scannerHome = tool "${ENV_VARS.jenkins_sonar_toolname}";
-                        withSonarQubeEnv(credentialsId: 'sonar', installationName: 'sonar-scanner') {
-                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=toDo"
+                        def scannerHome = tool "${ENV_VARS.jenkins_sonar_tool_client}";
+                        withSonarQubeEnv(credentialsId: 'sonar', installationName: "${ENV_VARS.jenkins_sonar_tool_client}") {
+                            sh "${ENV_VARS.jenkins_sonar_tool_server}/bin/sonar-scanner -Dsonar.projectKey=${ENV_VARS.sonarqube_projectKey}"
                         }
 
                         /*
