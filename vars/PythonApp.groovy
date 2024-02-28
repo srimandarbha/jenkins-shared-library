@@ -47,7 +47,7 @@ def call() {
             stage('verifying jenkins pipeline template if defined') {
                 when {
                     expression {
-                        return fileExists('jenkins_config.yaml') || error("Please define jenkins_config.yaml file under your repository")
+                        return fileExists('jenkins_config.yaml') || abortJob("Please define jenkins_config.yaml file under your repository")
                     }
                 }
                 steps {
