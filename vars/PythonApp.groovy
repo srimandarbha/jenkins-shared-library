@@ -113,7 +113,7 @@ def call() {
             stage("Deployment") {
                 steps {
                     script {
-                        info("Deploying code changes using ansible playbooks")
+                        info("Deploy code changes using ansible playbooks")
                     }
                 }
             }
