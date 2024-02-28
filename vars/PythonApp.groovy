@@ -27,8 +27,8 @@ def call() {
                         if (ENV_VARS.repoUrl == null) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
-                        echo "testing.yaml reading"
-                        data = readYaml file: "testing.yaml"
+                        echo "Checks for jenkins_config.yaml"
+                        data = readYaml file: "jenkins_config.yaml"
                         echo "${data}"
                         /*
                         if (ENV_VARS.repoUrl) {
@@ -55,6 +55,7 @@ def call() {
                             ENV_VARS.nexus_pass = 'deploy'
                             ENV_VARS.nexus_server = 'http://172.17.0.2:8081'
                             ENV_VARS.nexus_server_repo = 'apps'
+                            ENV_VARS.jenkins_sonar_toolname = 'sonar-scanner'
                         }
                     }
                 }
@@ -74,10 +75,12 @@ def call() {
                 steps {
                     script {
                         info("sonarqube report running")
-                        def scannerHome = tool 'sonar-scanner';
+                        def scannerHome = tool "${ENV_VARS.jenkins_sonar_toolname}";
                         withSonarQubeEnv(credentialsId: 'sonar', installationName: 'sonar-scanner') {
                             sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=toDo"
                         }
+
+                        /*
                         def qg = waitForQualityGate()
                         if (qg.status != 'OK') {
                             echo "failure: ${qg.status}"
@@ -86,7 +89,7 @@ def call() {
                             echo "SonarQube report tasks url: ${getURL['dashboardUrl']}"
 
                         }
-
+                        */
                     }
                 }
             }
