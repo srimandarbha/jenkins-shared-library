@@ -109,7 +109,7 @@ def call() {
             stage("Jmeter checks") {
                 steps {
                     script {
-                        sh "/var/jenkins_home/apache-jmeter-5.6.3 -j jmeter.save.saveservice.output_format=xml -n -t basic_test.jmx -l jenkins.io.report.jtl"
+                        sh "/var/jenkins_home/apache-jmeter-5.6.3/bin/jmeter -j jmeter.save.saveservice.output_format=xml -n -t basic_test.jmx -l jenkins.io.report.jtl"
                     }
                 }
             }
