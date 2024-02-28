@@ -87,7 +87,6 @@ def call() {
                             sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${ENV_VARS.sonarqube_projectKey}"
                         }
 
-                        /*
                         def qg = waitForQualityGate()
                         if (qg.status != 'OK') {
                             echo "failure: ${qg.status}"
@@ -96,7 +95,6 @@ def call() {
                             echo "SonarQube report tasks url: ${getURL['dashboardUrl']}"
 
                         }
-                        */
                     }
                 }
             }
