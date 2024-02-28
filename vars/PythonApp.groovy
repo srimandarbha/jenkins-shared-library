@@ -80,8 +80,8 @@ def call() {
                 steps {
                     script {
                         info("maven push")
-                        sh "tar -cvzf django_todo_master-1.0.tgz ."
-                        sh "curl -v -u deploy:deploy --upload-file django_todo_master-1.0.tgz http://172.17.0.2:8081/repository/apps/django_todo/1.0/django_todo-1-0.tgz"
+                        sh "git archive --format=tar main > ${app_name}-${app_version}.tar"
+                        sh "curl -v -u ${maven_user}:${maven_pass} --upload-file ${app_name}-${app_version}.tgz ${nexus_server}/repository/${nexus_server_repo}/${app_name}/${app_version}/${app_name}-${app_version}.tgz"
                     }
                 }
             }
@@ -89,7 +89,6 @@ def call() {
                 steps {
                     script {
                         info("Deployment to Ansible")
-                        echo "currentBuild.result ${currentBuild.result}"
                     }
                 }
             }
