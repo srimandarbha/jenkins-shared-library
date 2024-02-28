@@ -53,7 +53,7 @@ def call() {
                             ENV_VARS.app_version = '1.0'
                             ENV_VARS.nexus_user = 'deploy'
                             ENV_VARS.nexus_pass = 'deploy'
-                            ENV_VARS.nexus_server = '172.17.0.2'
+                            ENV_VARS.nexus_server = 'http://172.17.0.2:8081'
                             ENV_VARS.nexus_server_repo = 'apps'
                         }
                     }
