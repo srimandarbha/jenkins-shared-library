@@ -50,26 +50,7 @@ def call() {
                         return fileExists('jenkins_config.yaml') || abortJob("Please define jenkins_config.yaml file under your repository")
                     }
                 }
-                /*
-                config:
-                [app_name:django_todo,
-                 sonarqube:[token:sonar, url:test, projectKey:test, credentialsId:null],
-                 ansible:[host:aap.prod.hsbc, env:PROD, tests:false, credentialsId:null],
-                 jmeter:[
-                         jmeter_install_base:/var/jenkins_home/apache-jmeter-5.6.3,
-                         jmeter_bin_path:bin/jmeter,
-                         test_file:basic_steps.xml,
-                         input_format:xml,
-                         output_format:null,
-                         output_filename:null,
-                         jmeter_addtl_args:null],
-                 nexus:[nexus_user:deploy, nexus_pass:deploy, nexus_server:http://172.17.0.2:8081, nexus_server_apps:apps, credentialId:null]
-                 ]
-                 ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
 
-                 string(name: 'repoUrl', defaultValue: 'https://github.com/srimandarbha/django_todo', description: 'repository URL')
-                 string(name: 'repoUrl', defaultValue: 'https://github.com/srimandarbha/django_todo', description: 'repository URL')
-                 */
                 steps {
                     script{
                         if (ENV_VARS.repoUrl) {
@@ -82,6 +63,8 @@ def call() {
                             ENV_VARS.jenkins_sonar_tool_client = data.config.sonarqube.jenkins_sonar_tool_client
                             ENV_VARS.jenkins_sonar_tool_server = data.config.sonarqube.jenkins_sonar_tool_server
                             ENV_VARS.sonarqube_projectKey = data.config.sonarqube.projectKey
+                            ENV_VARS.jmeter_install_base = data.config.jmeter.jmeter_install_base ?: '/var/jenkins_home/apache-jmeter-5.6.3'
+
                         }
                         else {
                             ENV_VARS.app_name = params.repoUrl.contains('.git') ? params.repoUrl.split('/')[-1][0..-5] : params.repoUrl.split('/')[-1]
@@ -145,7 +128,7 @@ def call() {
             stage("Jmeter checks") {
                 steps {
                     script {
-                        sh "/var/jenkins_home/apache-jmeter-5.6.3/bin/jmeter -j jmeter.save.saveservice.output_format=xml -n -t basic_test.jmx -l jenkins.io.report.jtl"
+                        sh "${ENV_VARS.jmeter_install_base}/bin/jmeter -j jmeter.save.saveservice.output_format=xml -n -t ${ENV_VARS.jmeter_testfile} -l jenkins.io.report.jtl"
                     }
                 }
             }
