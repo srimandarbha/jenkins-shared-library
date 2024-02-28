@@ -81,7 +81,7 @@ def call() {
                     script {
                         info("maven push")
                         sh "tar -cvzf django_todo_master-1.0.tgz ."
-                        sh "curl -v -u deploy:deploy --upload-file django_todo_master-1.0.tgz http://172.17.0.2:8081/repository/apps/django_todo/1.0/django_todo-1.tgz"
+                        sh "curl -v -u deploy:deploy --upload-file django_todo_master-1.0.tgz http://172.17.0.2:8081/repository/apps/django_todo/1.0/django_todo-1-0.tgz"
                     }
                 }
             }
