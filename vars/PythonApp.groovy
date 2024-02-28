@@ -29,7 +29,7 @@ def call() {
                         }
                         checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "${ENV_VARS.repoUrl}"]])
                         echo "Checks for jenkins_config.yaml"
-                        data = readYaml file: "testing.yaml"
+                        data = readYaml file: "jenkins_config.yaml"
                         echo "${data}"
                         /*
                         if (ENV_VARS.repoUrl) {
