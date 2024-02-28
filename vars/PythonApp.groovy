@@ -39,7 +39,7 @@ def call() {
                             checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "${ENV_VARS.repoUrl}"]])
                             echo "Checks for jenkins_config.yaml"
                             data = readYaml file: "jenkins_config.yaml"
-                            echo "${data}"
+                            echo "${data.config}"
                         }
                     }
                 }
@@ -50,10 +50,35 @@ def call() {
                         return fileExists('jenkins_config.yaml') || abortJob("Please define jenkins_config.yaml file under your repository")
                     }
                 }
+                /*
+                config:
+                [app_name:django_todo,
+                 sonarqube:[token:sonar, url:test, projectKey:test, credentialsId:null],
+                 ansible:[host:aap.prod.hsbc, env:PROD, tests:false, credentialsId:null],
+                 jmeter:[
+                         jmeter_install_base:/var/jenkins_home/apache-jmeter-5.6.3,
+                         jmeter_bin_path:bin/jmeter,
+                         test_file:basic_steps.xml,
+                         input_format:xml,
+                         output_format:null,
+                         output_filename:null,
+                         jmeter_addtl_args:null],
+                 nexus:[nexus_user:deploy, nexus_pass:deploy, nexus_server:http://172.17.0.2:8081, nexus_server_apps:apps, credentialId:null]
+                 ]
+                 ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
+                 */
                 steps {
                     script{
                         if (ENV_VARS.repoUrl) {
-                            ENV_VARS.gitPull = true
+                            ENV_VARS.app_name = 'django_todo'
+                            ENV_VARS.app_version = '1.0'
+                            ENV_VARS.nexus_user = 'deploy'
+                            ENV_VARS.nexus_pass = 'deploy'
+                            ENV_VARS.nexus_server = 'http://172.17.0.2:8081'
+                            ENV_VARS.nexus_server_repo = 'apps'
+                            ENV_VARS.jenkins_sonar_toolname = 'sonar-scanner'
+                        }
+                        else {
                             ENV_VARS.app_name = 'django_todo'
                             ENV_VARS.app_version = '1.0'
                             ENV_VARS.nexus_user = 'deploy'
