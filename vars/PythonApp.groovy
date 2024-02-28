@@ -27,6 +27,7 @@ def call() {
                         if (ENV_VARS.repoUrl == null) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
+                        checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "${ENV_VARS.repoUrl}"]])
                         echo "Checks for jenkins_config.yaml"
                         data = readYaml file: "testing.yaml"
                         echo "${data}"
