@@ -28,7 +28,7 @@ def call() {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
                         }
                         echo "Checks for jenkins_config.yaml"
-                        data = readYaml file: "jenkins_config.yaml"
+                        data = readYaml file: "testing.yaml"
                         echo "${data}"
                         /*
                         if (ENV_VARS.repoUrl) {
