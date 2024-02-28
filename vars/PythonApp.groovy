@@ -132,6 +132,7 @@ def call() {
                         script {
                             info("email compose with jmeter report and build details")
                             perfReport 'jenkins.io.report.jtl'
+                            junit 'results.xml'
                         }
                     }
         }
