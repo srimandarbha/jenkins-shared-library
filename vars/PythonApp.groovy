@@ -66,20 +66,24 @@ def call() {
                  nexus:[nexus_user:deploy, nexus_pass:deploy, nexus_server:http://172.17.0.2:8081, nexus_server_apps:apps, credentialId:null]
                  ]
                  ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
+
+                 string(name: 'repoUrl', defaultValue: 'https://github.com/srimandarbha/django_todo', description: 'repository URL')
+                 string(name: 'repoUrl', defaultValue: 'https://github.com/srimandarbha/django_todo', description: 'repository URL')
                  */
                 steps {
                     script{
                         if (ENV_VARS.repoUrl) {
-                            ENV_VARS.app_name = 'django_todo'
+                            ENV_VARS.app_name = data.config.app_name
                             ENV_VARS.app_version = '1.0'
-                            ENV_VARS.nexus_user = 'deploy'
-                            ENV_VARS.nexus_pass = 'deploy'
-                            ENV_VARS.nexus_server = 'http://172.17.0.2:8081'
-                            ENV_VARS.nexus_server_repo = 'apps'
-                            ENV_VARS.jenkins_sonar_toolname = 'sonar-scanner'
+                            ENV_VARS.nexus_user = data.config.nexus.nexus_user
+                            ENV_VARS.nexus_pass = data.config.nexus.nexus_pass
+                            ENV_VARS.nexus_server = data.config.nexus.nexus_server
+                            ENV_VARS.nexus_server_repo = data.config.nexus.nexus_apps
+                            ENV_VARS.jenkins_sonar_toolname = data.config.sonarqube.tool_install
+                            ENV_VARS.sonarqube_projectKey = data.config.sonarqube.projectKey
                         }
                         else {
-                            ENV_VARS.app_name = 'django_todo'
+                            ENV_VARS.app_name = params.repoUrl.contains('.git') ? params.repoUrl.split('/')[-1][0..-5] : params.repoUrl.split('/')[-1]
                             ENV_VARS.app_version = '1.0'
                             ENV_VARS.nexus_user = 'deploy'
                             ENV_VARS.nexus_pass = 'deploy'
@@ -90,18 +94,6 @@ def call() {
                     }
                 }
             }
-         //   stage("Repo fetch") {
-         //       steps {
-         //           script {
-         //               info("${ENV_VARS.gitOrg} ${ENV_VARS.gitRepo}")
-         //               if (ENV_VARS.gitPull) {
-         //                   //Git(repoUrl="${params.repoUrl}")
-         //                   checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "${ENV_VARS.repoUrl}"]])
-         //               }
-         //           }
-         //       }
-         //   }
-
             stage("sonarqube checks") {
                 steps {
                     script {
@@ -129,7 +121,7 @@ def call() {
                     script {
                         info("creating archive of stable python code")
                         sh "git archive --format=tar main > ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
-                        sh "curl -u ${ENV_VARS.nexus_user}:${ENV_VARS.nexus_pass} --upload-file ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar ${ENV_VARS.nexus_server}/repository/${ENV_VARS.nexus_server_repo}/${ENV_VARS.app_name}/${ENV_VARS.app_version}/${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
+                        sh "curl -u ${ENV_VARS.nexus_user}:${ENV_VARS.nexus_pass} --upload-file ${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar ${ENV_VARS.nexus_server}/repository/${ENV_VARS.nexus_server_repo}/${ENV_VARS.app_name}/${ENV_VARS.app_name}-${ENV_VARS.app_version}.tar"
                         info("pushing artifact to nexus repository ${ENV_VARS.nexus_server}/${ENV_VARS.nexus_server_repo}")
                     }
                 }
@@ -145,7 +137,6 @@ def call() {
                 steps {
                     script {
                         echo 'python pytest'
-                        //sh 'python -m pytest -W ignore::UserWarning'
                         sh 'python3 -m pytest --junit-xml results.xml'
                     }
                 }
