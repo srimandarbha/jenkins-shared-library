@@ -17,21 +17,41 @@ def call() {
         }
 
         stages {
-            stage("PreRequisite Checks") {
+            stage("Check if GitHub repo exists") {
                 steps {
                     script {
                         echo "Conducting PythonApp deployment prechecks"
-                        ENV_VARS = [ changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true ]
+                        ENV_VARS = [changeNo: '###', repoUrl: '', gitOrg: '', gitRepo: '', runTests: true, gitPull: false, notify: true]
                         ARTIFACT = [:]
                         ENV_VARS.repoUrl = params.repoUrl
                         if (ENV_VARS.repoUrl == null) {
                             error("PLEASE SET REPOSITORY URL TO FURTHER PROCEED")
+                        } else {
+                            ENV_VARS.gitPull = true
                         }
-                        checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "${ENV_VARS.repoUrl}"]])
-                        echo "Checks for jenkins_config.yaml"
-                        data = readYaml file: "jenkins_config.yaml"
-                        echo "${data}"
-
+                    }
+                }
+            }
+            stage('proceed with Python app github repo pull') {
+                steps {
+                    script {
+                        if ( ENV_VARS.gitPull) {
+                            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "${ENV_VARS.repoUrl}"]])
+                            echo "Checks for jenkins_config.yaml"
+                            data = readYaml file: "jenkins_config.yaml"
+                            echo "${data}"
+                        }
+                    }
+                }
+            }
+            stage('verifying jenkins pipeline template if defined') {
+                when {
+                    expression {
+                        return fileExists('jenkins_config.yaml')
+                    }
+                }
+                steps {
+                    script{
                         if (ENV_VARS.repoUrl) {
                             ENV_VARS.gitPull = true
                             ENV_VARS.app_name = 'django_todo'
@@ -45,17 +65,18 @@ def call() {
                     }
                 }
             }
-            stage("Repo fetch") {
-                steps {
-                    script {
-                        info("${ENV_VARS.gitOrg} ${ENV_VARS.gitRepo}")
-                        if (ENV_VARS.gitPull) {
-                            //Git(repoUrl="${params.repoUrl}")
-                            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "${ENV_VARS.repoUrl}"]])
-                        }
-                    }
-                }
-            }
+         //   stage("Repo fetch") {
+         //       steps {
+         //           script {
+         //               info("${ENV_VARS.gitOrg} ${ENV_VARS.gitRepo}")
+         //               if (ENV_VARS.gitPull) {
+         //                   //Git(repoUrl="${params.repoUrl}")
+         //                   checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: "${ENV_VARS.repoUrl}"]])
+         //               }
+         //           }
+         //       }
+         //   }
+
             stage("sonarqube checks") {
                 steps {
                     script {
