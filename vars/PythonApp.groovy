@@ -89,6 +89,14 @@ def call() {
                 steps {
                     script {
                         info("Deployment to Ansible")
+                        echo "currentBuild.result ${currentBuild.result}"
+                    }
+                }
+            }
+            stage("running pytests") {
+                steps {
+                    script {
+                        sh 'python -m pytest -W ignore::UserWarning'
                     }
                 }
             }
