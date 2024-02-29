@@ -1,5 +1,5 @@
-import com.shared.lib.Common
-import com.shared.lib.Utils
+//import com.shared.lib.Common
+//import com.shared.lib.Utils
 import java.util.Date
 
 Date date = new Date()
@@ -114,6 +114,7 @@ def call() {
                 steps {
                     script {
                         info("Deploy code changes using ansible playbooks")
+                        ansiblePlaybook credentialsId: 'ssh_login', inventory: 'inventory.txt', playbook: 'playbooks/deployapp.yaml'
                     }
                 }
             }
