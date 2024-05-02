@@ -1,0 +1,56 @@
+import groovy.json.JsonSlurper
+
+def restFul(devicelist,num) {
+        def devicemap = ['host': num, 'device': num, 'location': '']
+        def response = httpRequest  url: 'https://gorest.co.in/public/v2/posts',
+                        acceptType : "APPLICATION_JSON",
+                        httpMode : 'GET',
+                        ignoreSslErrors : true
+                        
+        if ( response.status != 200 ) {
+            error("api authentication failed or not accessible.exiting")
+            System.exit(1)
+        }
+        def jsonslurper = new JsonSlurper()
+        def parsedData=jsonslurper.parseText(response.content)
+        def id = parsedData.size() > 0 ? parsedData[num].id : null
+        devicemap['host'] = num
+        devicemap['device'] = id
+        devicemap['location'] = 'US'
+        devicelist.add(devicemap)
+        return devicelist
+}
+
+pipeline {
+    agent any
+    environment {
+        CREDENTIAL_MAP = [
+            US: 'US_SVC',
+            GB: 'GB_SVC',
+            HK: 'HK_SVC'
+        ]
+    }
+    parameters {
+            string(name: 'Servers', description: 'Enter comma-separated values')
+    }
+    stages {
+    stage('Preparation') {
+     steps {
+       script {
+        def ran=9
+        def range = (0..ran).toList()
+        def number
+        def devicelist = []
+        range.each  { num ->
+            number=restFul(devicelist,num)
+            println(number)
+        }
+        println(devicelist.size())
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'US_SVC', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+            echo "uname=$USERNAME pwd=$PASSWORD"
+        }
+      }
+    }
+   }
+  }
+}
